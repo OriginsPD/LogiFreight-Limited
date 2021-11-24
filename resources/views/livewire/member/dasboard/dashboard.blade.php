@@ -1,9 +1,10 @@
-<div x-data="{ isSeeMore: true, isPackage: false, isAll: false, isRecent: true }"
+<div x-data="{ isSeeMore: true, isPackage: false,
+               isAll: false, isRecent: true, invoicePre: @entangle('invoicePre') }"
      x-on:hide-see-more.window="isSeeMore = false">
 
     <x-alerts :message="session('success')" />
 
-    <div class="text-white bg-gradient-to-bl from-blue-200 via-blue-600 to-indigo-700">
+    <div class="text-white py-4 bg-gradient-to-bl from-blue-200 via-blue-600 to-indigo-700">
 
         <div class="px-4 py-20 mx-auto max-w-screen-xl sm:px-6 lg:px-8">
 
@@ -190,7 +191,7 @@
 
                 <x-input.label label="Search Package Via">
 
-                    <x-input.text placeholder="Search"/>
+                    <x-input.text wire:model="search" placeholder="Search"/>
 
                 </x-input.label>
 
@@ -200,19 +201,19 @@
 
                 <x-table.head> Tracking # </x-table.head>
 
-                <x-table.head> Username </x-table.head>
-
-                <x-table.head> Email </x-table.head>
-
                 <x-table.head> Shipper </x-table.head>
 
                 <x-table.head> Package Type </x-table.head>
 
                 <x-table.head> Weight (lb) </x-table.head>
 
+                <x-table.head> Status </x-table.head>
+
                 <x-table.head> Estimated Cost </x-table.head>
 
                 <x-table.head> Internal Tracking # </x-table.head>
+
+                <x-table.head> Invoice </x-table.head>
 
             </x-slot>
 
@@ -222,19 +223,23 @@
 
                     <x-table.cell> {{ $recent->tracking_no }} </x-table.cell>
 
-                    <x-table.cell> {{ $recent->member->user->username }} </x-table.cell>
-
-                    <x-table.cell> {{ $recent->member->user->email }} </x-table.cell>
-
                     <x-table.cell> {{ $recent->shipper->name }} </x-table.cell>
 
                     <x-table.cell> {{ $recent->packagetype->type }} </x-table.cell>
 
                     <x-table.cell> {{ $recent->weight }} </x-table.cell>
 
+                    <x-table.cell> {{ $recent->status }} </x-table.cell>
+
                     <x-table.cell> $ {{ $recent->estimated_cost }} </x-table.cell>
 
                     <x-table.cell> {{ $recent->internal_tracking }} </x-table.cell>
+
+                    <x-table.cell class="text-center">
+
+                        <i wire:click.prevent="invoicePreview({{ $recent }})" class="fas fa-file-invoice cursor-pointer text-blue-700 text-lg"></i>
+
+                    </x-table.cell>
 
                 </x-table.row>
 
@@ -248,9 +253,13 @@
 
             @endforelse
 
-            <x-table.row>
+            <x-table.row x-show="isSeeMore">
 
-                <x-table.cell colspan="8" class="text-center text-blue-600"><a href="#"> See More </a> </x-table.cell>
+                <x-table.cell wire:click.prevent="seeMore" colspan="8" class="text-center cursor-pointer text-blue-600">
+
+                    See More
+
+                </x-table.cell>
 
             </x-table.row>
 
@@ -314,6 +323,12 @@
 
                 </x-table.head>
 
+                <x-table.head class="cursor-pointer" wire:click.prevent="filter('status')">
+
+                    Status <i class="fad fa-sort-up pl-1"></i>
+
+                </x-table.head>
+
                 <x-table.head class="cursor-pointer" wire:click.prevent="filter('estimated_cost')">
 
                     Estimated Cost <i class="fad fa-sort-up pl-1"></i>
@@ -323,6 +338,12 @@
                 <x-table.head class="cursor-pointer" wire:click.prevent="filter('internal_tracking')">
 
                     Internal Tracking # <i class="fad fa-sort-up pl-1"></i>
+
+                </x-table.head>
+
+                <x-table.head class="cursor-pointer" >
+
+                    Invoice
 
                 </x-table.head>
 
@@ -340,9 +361,17 @@
 
                     <x-table.cell> {{ $allpackage->weight }} </x-table.cell>
 
+                    <x-table.cell> {{ $allpackage->status }} </x-table.cell>
+
                     <x-table.cell> $ {{ $allpackage->estimated_cost }} </x-table.cell>
 
                     <x-table.cell> {{ $allpackage->internal_tracking }} </x-table.cell>
+
+                    <x-table.cell class="text-center">
+
+                        <i wire:click.prevent="invoicePreview({{ $allpackage }})" class="fas fa-file-invoice cursor-pointer text-blue-700 text-lg"></i>
+
+                    </x-table.cell>
 
                 </x-table.row>
 
@@ -350,7 +379,7 @@
 
                 <x-table.row>
 
-                    <x-table.cell colspan="8" class="text-center"> No Recent Order Made </x-table.cell>
+                    <x-table.cell colspan="8    " class="text-center"> No Recent Order Made </x-table.cell>
 
                 </x-table.row>
 
@@ -358,7 +387,7 @@
 
             <x-table.row x-show="isSeeMore">
 
-                <x-table.cell wire:click.prevent="seeMore" colspan="8" class="text-center cursor-pointer text-blue-600">
+                <x-table.cell wire:click.prevent="seeMore" colspan="8   " class="text-center cursor-pointer text-blue-600">
 
                     See More
 
@@ -370,5 +399,16 @@
 
 
     </div>
+
+    <x-modal alpName="invoicePre" class="flex bg-gray-800 bg-opacity-90">
+
+        <div @click.away="invoicePre = false" class="h-10/12 w-11/12">
+
+            <img src="{{ $url }}" class="object-fill h-full w-full" alt="">
+
+        </div>
+
+
+    </x-modal>
 
 </div>

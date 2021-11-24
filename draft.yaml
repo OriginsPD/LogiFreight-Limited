@@ -31,6 +31,7 @@ models:
     tracking_no: integer
     estimated_cost: decimal:8,2
     actually_cost: decimal:8,2 nullable
+    invoice: string
     internal_tracking: integer nullable
     expected_date: date
     arrival_date: date nullable

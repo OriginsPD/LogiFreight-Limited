@@ -24,6 +24,7 @@ class CreatePackagesTable extends Migration
             $table->string('status');
             $table->integer('tracking_no');
             $table->decimal('estimated_cost', 8, 2);
+            $table->string('invoice')->nullable();
             $table->decimal('actually_cost', 8, 2)->nullable();
             $table->integer('internal_tracking')->nullable();
             $table->date('expected_date');

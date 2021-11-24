@@ -4,14 +4,22 @@ namespace App\Http\Livewire\Member\Dasboard;
 
 use App\Models\Package;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Dashboard extends Component
 {
+
+    use WithPagination;
 
     public $column = 'tracking_no';
     public $order = 'desc';
     public $status = '';
     public $pagintor = 10;
+
+    public $search = '';
+
+    public $invoicePre = false;
+    public $url;
 
     protected $listeners = ['refresh' => 'render'];
 
@@ -33,14 +41,37 @@ class Dashboard extends Component
 
     }
 
+    public function invoicePreview(Package $selected)
+    {
+        $this->url = $selected->invoiceUrl();
+
+        $this->invoicePre = true;
+    }
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
 
         return view('livewire.member.dasboard.dashboard', [
             'recents' => Package::with('member', 'shipper', 'packagetype')
+
                 ->where('member_id', auth()->id())
+
                 ->where('created_at', 'like', "%" . '2021' . "%")
-                ->latest()->paginate($this->pagintor),
+
+                ->whereHas('shipper',function ($query){
+                    $query->where('name','like','%'.$this->search.'%');
+                })
+
+                ->orwhere('weight','like','%'.$this->search.'%')
+
+                ->latest()
+
+                ->paginate($this->pagintor),
 
             'allpackages' => Package::with('member', 'shipper', 'packagetype')
                 ->where('member_id', auth()->id())

@@ -22,8 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Index::class)->name('index');
 
-Route::get('/admin', AdminDashboard::class)
-    ->name('Admin.dashboard');
+Route::group(['middleware' => 'auth'],function (){
 
-Route::get('/member', Dashboard::class)
-    ->name('member.dashboard');
+    Route::get('/admin', AdminDashboard::class)
+        ->name('Admin.dashboard');
+
+    Route::get('/member', Dashboard::class)
+        ->name('member.dashboard');
+
+});

@@ -99,10 +99,48 @@
 
         </x-input.label>
 
+            <x-input.label colspan="-mb-10" label="Upload Package Invoice">
+
+                    <div class=" h-20 w-20 m-5 flex top-0 overflow-hidden bg-gray-100">
+
+                        @if($upload)
+
+                            <img src="{{ $upload->temporaryUrl() }}"
+                                 class="h-full w-full object-fill" alt="avatar">
+
+                        @else
+
+                            <img src="{{ $package->invoiceUrl() }}" class="h-full w-full" alt="avatar">
+
+                        @endif
+
+                    </div>
+
+                    <div x-data="{ focus: false }">
+
+                        <x-input.text class="sr-only" id="file"
+                                      @focus="focus = true" @blur="focus=false"
+                                      type="file"
+                                      wire:model="upload"/>
+
+                        @if($errors->first('upload'))
+
+                            <span class="text-red-500 text-xs italic  m-1">
+
+                                * {{ $errors->first('upload') }}
+
+                            </span>
+
+                        @endif
+
+                    </div>
+
+            </x-input.label>
+
 
         <x-input.submit class="bg-blue-500">
 
-            <span wire:loading.delay.long wire:loading.class="animate-spin"
+            <span wire:loading.delay wire:loading.class="animate-spin"
                   class="transform transition duration-300">
 
                 <i class="fad fa-spinner-third"></i>

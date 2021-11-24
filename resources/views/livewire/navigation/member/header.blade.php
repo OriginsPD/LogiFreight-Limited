@@ -25,15 +25,15 @@
                 <div class="hidden space-x-2 lg:block">
 
                     <a @click.prevent="isQuick = !isQuick"
-                        class="px-4 py-2 mt-2 text-sm font-semibold bg-white rounded-lg
+                        class="px-4 py-2 mt-2 text-sm font-semibold bg-white hover:bg-yellow-400 rounded-lg
 
-                     hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 shadow "
+                     hover:text-white focus:text-gray-900 hover:bg-gray-200 shadow "
 
                        href="#">
 
                         <i class="far fa-box-full pr-1"></i>
 
-                        QuickAlert
+                        Pre-Alert
 
                     </a>
 
@@ -131,7 +131,7 @@
         </div>
 
 
-        <div class="flex mt-12 p-4">
+        <div class="flex -mt-2 p-4">
 
             <div class=" w-8/12 px-4">
 
@@ -188,8 +188,6 @@
                 </div>
 
             </div>
-
-
 
         </div>
 

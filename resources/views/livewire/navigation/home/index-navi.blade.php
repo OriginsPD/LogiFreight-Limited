@@ -9,11 +9,11 @@
 
             <x-navigation.center class="text-white">
 
-                About Us
+                Services
 
             </x-navigation.center>
 
-                <x-dropdown.links class="text-white" title="Dropdown">
+                <x-dropdown.links class="text-white" title="Shipping Agents">
 
                     <x-dropdown.href > link 1 </x-dropdown.href>
                     <x-dropdown.href > link 1 </x-dropdown.href>
@@ -23,7 +23,7 @@
 
             <x-navigation.center class="text-white">
 
-                About Us
+                Pick Up Times
 
             </x-navigation.center>
 

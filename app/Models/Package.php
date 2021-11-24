@@ -7,6 +7,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * App\Models\Package
@@ -66,6 +67,7 @@ class Package extends Model
         'status',
         'tracking_no',
         'estimated_cost',
+        'invoice',
         'actually_cost',
         'internal_tracking',
         'expected_date',
@@ -99,5 +101,12 @@ class Package extends Model
     public function shipper()
     {
         return $this->belongsTo(Shipper::class);
+    }
+
+    public function invoiceUrl(): string
+    {
+        return $this->invoice
+            ? Storage::disk('invoicePhoto')->url($this->invoice)
+            : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email)));
     }
 }

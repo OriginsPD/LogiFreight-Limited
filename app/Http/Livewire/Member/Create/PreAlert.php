@@ -8,10 +8,14 @@ use App\Models\PackageType;
 use App\Models\Shipper;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class PreAlert extends Component
 {
+    use WithFileUploads;
+
     public Package $package;
+    public $upload;
 
     protected $rules = [
         'package.tracking_no' => 'required',
@@ -26,10 +30,15 @@ class PreAlert extends Component
     {
         $this->validate();
 
+        $invoiceName = $this->upload->store('/','invoicePhoto');
+
         $this->package->setAttribute('member_id',auth()->id());
         $this->package->setAttribute('status','In-Transit');
+        $this->package->setAttribute('invoice',$invoiceName);
         $this->package->setAttribute('created_at',now());
         $this->package->save();
+
+        sleep(1);
 
         $this->dispatchBrowserEvent('close-modal');
         $this->dispatchBrowserEvent('show-alert');
