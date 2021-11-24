@@ -22,13 +22,16 @@ class Login extends Component
     {
         $this->validate();
 
-        if (!auth()->attempt(['email' => $this->user->email, 'password' => $this->password])) {
+        if (auth()->attempt(['email' => $this->user->email, 'password' => $this->password])) {
 
-            $this->addError('user.email', trans('auth.failed'));
+            return (auth()->user()->isAdmin)
+                ?  redirect(route('Admin.dashboard'))
+                :  redirect(route('member.dashboard'));
 
         }
 
-        return redirect(route('Admin.dashboard'));
+        $this->addError('user.email', trans('auth.failed'));
+
     }
 
     public function updated(): void

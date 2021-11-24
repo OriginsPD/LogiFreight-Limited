@@ -1,0 +1,54 @@
+models:
+  Member:
+    user_id: id foreign
+    member_num: integer
+    trn: integer
+    address: text:400
+    mailaddress: string nullable
+    relationships:
+      hasMany: package
+    timestamps: false
+
+  Shipper:
+    name: string
+    address: text
+    relationships:
+      hasMany: package
+    timestamps: false
+
+  PackageType:
+    type: string
+    relationships:
+      hasMany: package
+    timestamps: false
+
+  Package:
+    packagetype_id: id foreign
+    member_id: id foreign
+    weight: decimal:8,2 comment:lb
+    shipper_id: id foreign
+    status: string
+    tracking_no: integer
+    estimated_cost: decimal:8,2
+    actually_cost: decimal:8,2 nullable
+    internal_tracking: integer nullable
+    expected_date: date
+    arrival_date: date nullable
+    created_at: datetime
+    timestamps: false
+
+  PackageCheckpoint:
+    package_id: id foreign
+    date: date useCurrent
+
+  Customs:
+    package_id: id foreign
+    timestamps: false
+
+  Billing:
+    package_id: id foreign
+    basic_rate: decimal:8,2
+    handler_fee: decimal:8,2 nullable
+    custom_duties: decimal:8,2 nullable
+    final_total: decimal:8,2 nullable
+    timestamps: false

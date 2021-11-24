@@ -3,9 +3,9 @@
     'useBtn' => false,
 ])
 
-<div class="xl:w-8/12 xl:mb-0 px-4 mx-auto mt-12 w-10/12">
+<div class=" xl:mb-0 px-4 mx-auto bg-gray-200 w-full">
 
-    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
+    <div class="relative flex flex-col min-w-0 break-words bg-gray-200 w-full mb-6 rounded ">
 
         <div class="rounded-t mb-0 px-4 py-3 border-0">
 
@@ -13,7 +13,7 @@
 
                 <div class="relative w-full px-4 max-w-full flex-grow flex-1">
 
-                    <h3 class="font-semibold text-base text-blueGray-700">
+                    <h3 class="font-semibold text-base text-gray-700">
 
                         {{ $title }}
 

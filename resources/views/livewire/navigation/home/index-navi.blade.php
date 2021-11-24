@@ -1,10 +1,10 @@
-<div x-data="{ isSlide: false }"
+<div x-data="{ isSlide: false, isLogin: false }"
      @keydown.esc.window="isSlide = false"
      @click.away.window="isSlide = false"
     class="w-screen">
 
     <x-navigation
-        end="1">
+        end="1" center="1">
         <x-slot name="mid">
 
             <x-navigation.center class="text-white">
@@ -37,15 +37,9 @@
 
         <x-slot name="end">
 
-            <x-navigation.end class="text-white hover:underline">
+            <x-navigation.end @click.prevent="isLogin = !isLogin" class="text-white hover:underline">
 
                 Login
-
-            </x-navigation.end>
-
-            <x-navigation.end class="text-white hover:underline">
-
-                Sign Up
 
             </x-navigation.end>
 
@@ -91,7 +85,12 @@
 
         </nav>
 
-
     </div>
+
+    <x-modal alpName="isLogin" class="flex bg-gray-900 bg-opacity-80">
+
+        @livewire('auth.login')
+
+    </x-modal>
 
 </div>

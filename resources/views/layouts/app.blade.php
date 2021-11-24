@@ -18,10 +18,10 @@
     @livewireStyles
 </head>
 <body class="h-auto antialiased bg-no-repeat font-sans"
-      style="background-image: url('https://cdn.pixabay.com/photo/2021/10/02/09/18/airplane-6674689_960_720.jpg');
+      style="background-image: url('https://cdn.pixabay.com/photo/2017/10/23/22/37/dhl-2882823_960_720.jpg');
              background-size: cover">
 
-<div class="bg-blue-800 h-auto pb-0.5 w-screen bg-opacity-80">
+<div class="bg-gray-900 h-screen pb-0.5 w-screen bg-opacity-80">
 
     @livewire('navigation.home.index-navi')
 

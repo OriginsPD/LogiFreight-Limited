@@ -7,7 +7,7 @@
             border-r border-gray-100 shadow z-30 md:flex-row h-screen">
 
     <div
-        class="flex flex-col w-full md:w-64 h-full text-gray-700 bg-gray-50 flex-shrink-0">
+        class="flex flex-col w-full md:w-64 h-full text-gray-700 bg-gray-900 flex-shrink-0">
 
         <nav class="flex-grow md:block mt-8 px-4 pb-4 md:pb-0 md:overflow-y-auto">
 
@@ -22,6 +22,7 @@
                 <x-link.side>
 
                     {{ __('Create Member') }}
+
                 </x-link.side>
 
             </x-dropdown>

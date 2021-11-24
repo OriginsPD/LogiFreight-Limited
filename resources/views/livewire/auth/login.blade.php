@@ -1,10 +1,10 @@
-<div>
+<div @click.away="isLogin = false" class="w-8/12">
 
     <x-form wire:submit.prevent="authUser" grid="1">
 
         <x-slot name="title">
 
-            <h1 class="text-2xl font-semibold w-full text-center text-blue-700">
+            <h1 class="text-4xl font-extrabold w-full text-center text-blue-700">
 
                 Login
 

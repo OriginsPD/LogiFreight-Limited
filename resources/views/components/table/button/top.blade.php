@@ -4,7 +4,7 @@
 
 @php
 
-$classes = 'text-white text-xs font-semibold uppercase shadow-md
+$classes = 'text-white text-xs font-semibold uppercase
             px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1
             ease-linear transition-all duration-150 ';
 

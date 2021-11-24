@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\Admin\AdminDashboard;
 use App\Http\Livewire\Home\Index;
+use App\Http\Livewire\Member\Dasboard\Dashboard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,5 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Index::class)->name('index');
 
-Route::get('/Admin', AdminDashboard::class)
+Route::get('/admin', AdminDashboard::class)
     ->name('Admin.dashboard');
+
+Route::get('/member', Dashboard::class)
+    ->name('member.dashboard');
