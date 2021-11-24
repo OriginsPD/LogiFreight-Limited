@@ -188,9 +188,11 @@
 
             <x-slot name="headerBtn">
 
-                <x-table.button.top>
-                    Search
-                </x-table.button.top>
+                <x-input.label label="Search Package Via">
+
+                    <x-input.text placeholder="Search"/>
+
+                </x-input.label>
 
             </x-slot>
 
@@ -261,7 +263,7 @@
          x-transition.out.duration.300ms.opacity.0
         class="px-4 mt-12 transform transition duration-300 w-11/12 mx-auto p-5">
 
-        <x-table title="Recent Packages This Year">
+        <x-table title="Packages History">
 
             <x-slot name="headerBtn">
 
