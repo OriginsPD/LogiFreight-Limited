@@ -11,6 +11,7 @@ class Profile extends Component
     public User $user;
     public Member $member;
     public $password;
+    public $password_current;
     public $password_confirmation;
 
     public $changepass = false;
@@ -33,7 +34,9 @@ class Profile extends Component
         $this->member->update();
 
         $this->dispatchBrowserEvent('close-modal');
+        $this->dispatchBrowserEvent('show-alert');
         session()->put('success', 'Profile Updated Successful');
+        $this->emit('refresh');
 
         $this->password = '';
         $this->password_confirmation = '';

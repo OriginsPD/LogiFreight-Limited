@@ -50,19 +50,31 @@
 
             <div class="col-span-full grid grid-cols-2 gap-4">
 
-                <x-input.label for="password" label="Password">
+                <x-input.label colspan="col-span-full" for="password_current" label="Current Password">
 
-                    <x-input.text type="password" wire:model.debounce.300ms="password"
-                                  :error="$errors->first('password')" />
-
-                </x-input.label>
-
-                <x-input.label for="password_confirmation" label="Password Confirmation">
-
-                    <x-input.text type="password" wire:model.debounce.300ms="password_confirmation"
-                                  :error="$errors->first('password_confirmation')" />
+                    <x-input.text type="password" wire:model.debounce.300ms="password_current"
+                                  :error="$errors->first('password_current')" />
 
                 </x-input.label>
+
+                @if(Hash::check($password_current,auth()->user()->password))
+
+                    <x-input.label for="password" label="Password">
+
+                        <x-input.text type="password" wire:model.debounce.300ms="password"
+                                      :error="$errors->first('password')" />
+
+                    </x-input.label>
+
+                    <x-input.label for="password_confirmation" label="Password Confirmation">
+
+                        <x-input.text type="password" wire:model.debounce.300ms="password_confirmation"
+                                      :error="$errors->first('password_confirmation')" />
+
+                    </x-input.label>
+
+
+                @endif
 
             </div>
 

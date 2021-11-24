@@ -32,7 +32,9 @@ class PreAlert extends Component
         $this->package->save();
 
         $this->dispatchBrowserEvent('close-modal');
+        $this->dispatchBrowserEvent('show-alert');
         session()->put('success','Package Created Successful');
+        $this->emit('refresh');
         $this->package = new Package;
 
     }

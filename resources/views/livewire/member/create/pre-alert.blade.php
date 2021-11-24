@@ -81,7 +81,7 @@
 
             </x-slot>
 
-            <x-input.text type="number" class="py-2" value="0" aria-valuemin="0" wire:model.debounce.300ms="package.weight"
+            <x-input.text type="number" step="00.01" class="py-2" value="0" aria-valuemin="0" wire:model.debounce.300ms="package.weight"
                           :error="$errors->first('package.weight')"/>
 
         </x-input.label>

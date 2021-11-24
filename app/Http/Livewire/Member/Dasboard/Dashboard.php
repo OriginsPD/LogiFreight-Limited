@@ -13,6 +13,8 @@ class Dashboard extends Component
     public $status = '';
     public $pagintor = 10;
 
+    protected $listeners = ['refresh' => 'render'];
+
     public function filter($col)
     {
         $this->column = $col;

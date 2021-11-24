@@ -21,12 +21,12 @@
             </div>
 
             <!---===================== FIRST ROW CONTAINING THE  STATS CARD STARTS HERE =============================-->
-            <div class="flex justify-center  py-10 p-14">
+            <div class="grid lg:grid-cols-4 gap-4 grid-cols-2 ">
                 <!---== First Stats Container ====--->
                 <div class="container mx-auto pr-4">
 
                     <div class="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl
-                                transition duration-500 transform hover:scale-100 cursor-pointer">
+                                transition duration-500 transform hover:scale-105 cursor-pointer">
 
                         <div class="h-20 bg-red-500 flex items-center justify-between">
 
@@ -53,7 +53,7 @@
                 <div class="container mx-auto pr-4">
 
                     <div class="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl
-                                transition duration-500 transform hover:scale-100 cursor-pointer">
+                                transition duration-500 transform hover:scale-105 cursor-pointer">
 
                         <div class="h-20 bg-blue-500 flex items-center justify-between">
 
@@ -83,7 +83,7 @@
                 <!---== Third Stats Container ====--->
                 <div class="container mx-auto pr-4">
 
-                    <div class="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
+                    <div class="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-105 cursor-pointer">
 
                         <div class="h-20 bg-yellow-400 flex items-center justify-between">
 
@@ -114,7 +114,7 @@
                 <div class="container mx-auto">
 
                     <div class="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl
-                                transition duration-500 transform hover:scale-100 cursor-pointer">
+                                transition duration-500 transform hover:scale-105 cursor-pointer">
 
                         <div class="h-20 bg-purple-900 flex items-center justify-between">
 
