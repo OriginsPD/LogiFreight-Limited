@@ -2,8 +2,8 @@ models:
   Member:
     user_id: id foreign
     member_num: integer
-    trn: integer
-    address: text:400
+    trn: integer nullable
+    address: text:400 nullable
     mailaddress: string nullable
     relationships:
       hasMany: package
@@ -29,11 +29,11 @@ models:
     shipper_id: id foreign
     status: string
     tracking_no: integer
-    estimated_cost: decimal:8,2
+    estimated_cost: decimal:8,2 nullable
     actually_cost: decimal:8,2 nullable
-    invoice: string
+    invoice: string nullable
     internal_tracking: integer nullable
-    expected_date: date
+    expected_date: date nullable
     arrival_date: date nullable
     created_at: datetime
     timestamps: false

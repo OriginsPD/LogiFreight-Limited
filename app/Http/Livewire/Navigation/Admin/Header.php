@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Navigation\Admin;
 
+use App\Models\Member;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -12,7 +13,9 @@ class Header extends Component
 {
     public function render()
     {
-        return view('livewire.navigation.admin.header');
+        return view('livewire.navigation.admin.header',[
+            'personalInfo' => Member::with('user')->get(),
+        ]);
     }
 
     public function logout(): Redirector|Application|RedirectResponse

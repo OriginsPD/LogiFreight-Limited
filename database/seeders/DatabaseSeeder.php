@@ -22,24 +22,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(10)->state(
+        User::factory()->count(10)->state(
             ['isAdmin' => 0],
             ['isAdmin' => 1],
         )->create();
-        Member::factory(10)->create();
-        Shipper::factory(10)->create();
+        Member::factory()->count(10)->create();
+        Shipper::factory()->count(10)->create();
         PackageType::factory()->count(2)->state(new Sequence(
             ['type' => 'electronics'],
             ['type' => 'clothing'],
         ))->create();
-        Package::factory(10)->state(new Sequence(
+        Package::factory()->count(10)->state(new Sequence(
             ['status' => 'In-Transit'],
             ['status' => 'On-Their-Way-To-Jamaica'],
             ['status' => 'delivered'],
             ['status' => 'warehouse'],
 //            ['status' => 'On-Their-Way-To-Jamaica']
         ))->create();
-        Customs::factory(10)->create();
-        Billing::factory(10)->create();
+        Customs::factory()->count(10)->create();
+        Billing::factory()->count(10)->create();
     }
 }

@@ -69,6 +69,12 @@ class Dashboard extends Component
 
                 ->orwhere('weight','like','%'.$this->search.'%')
 
+                ->orwhere('estimated_cost','like','%'.$this->search.'%')
+
+                ->orwhere('tracking_no','like','%'.$this->search.'%')
+
+                ->orwhere('internal_tracking','like','%'.$this->search.'%')
+
                 ->latest()
 
                 ->paginate($this->pagintor),
