@@ -15,8 +15,6 @@ class AdminDashboard extends Component
     public Package $package;
     public Package $packageEdit;
 
-    public $memberInfo;
-
     public $column = 'tracking_no';
     public $order = 'desc';
     public $status = '';
@@ -30,34 +28,6 @@ class AdminDashboard extends Component
     public $url;
 
     protected $listeners = ['refresh' => 'render'];
-
-    protected $rules = [
-        'packageEdit.tracking_no' => 'required',
-        'packageEdit.internal_tracking' => 'required',
-        'packageEdit.packagetype_id' => 'required',
-        'packageEdit.shipper_id' => 'required',
-        'packageEdit.arrival_date' => 'required|after:today',
-        'packageEdit.weight' => 'required|min:1',
-        'packageEdit.actually_cost' => 'required|min:500.00|numeric'
-    ];
-
-    public function packageUpdate()
-    {
-        $this->validate();
-
-        dd(404);
-
-        $this->packageEdit->setAttribute('status','warehouse');
-        $this->packageEdit->update();
-
-        sleep(1);
-
-        $this->dispatchBrowserEvent('close-modal');
-        $this->dispatchBrowserEvent('show-alert');
-        session()->put('success','Package Updated Successful');
-        $this->emit('refresh');
-        $this->packageEdit = new Package;
-    }
 
     public function filter($col)
     {
@@ -85,25 +55,11 @@ class AdminDashboard extends Component
 
     public function invoiceAction(Package $selected)
     {
-        $this->packageEdit = $selected;
-        $this->packageEdit->internal_tracking = 'LFL58697';
-
-        $this->memberInfo = $this->packageEdit->member->member_num;
+        $this->package = $selected;
 
         $this->invoiceAct = true;
     }
 
-    public function packageFee()
-    {
-        if ($this->packageEdit->weight > 3.5) {
-
-            $this->packageEdit->actually_cost = $this->packageEdit->estimated_cost + (1500 * $this->packageEdit->weight);
-
-        } else {
-
-            $this->packageEdit->actually_cost = 1500 + $this->packageEdit->estimated_cost;
-        }
-    }
 
     public function updatingSearch(): void
     {
@@ -149,8 +105,6 @@ class AdminDashboard extends Component
             'transitCount' => Package::where('status', 'In-Transit')
                 ->count(),
 
-            'description' => PackageType::all(),
-            'merchants' => Shipper::all(),
         ])
             ->extends('layouts.admin');
     }
