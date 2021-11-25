@@ -1,5 +1,7 @@
 <div x-data="{ isSeeMore: true, isPackage: false,
-               isAll: false, isRecent: true, invoicePre: @entangle('invoicePre') }"
+               isAll: false, isRecent: true,
+               invoicePre: @entangle('invoicePre'),
+                invoiceAct: @entangle('invoiceAct')}"
      x-on:hide-see-more.window="isSeeMore = false"
      @click.prevent="isSlide = false" >
 
@@ -233,7 +235,14 @@
 
                     <x-table.cell class="text-center">
 
-                        <i wire:click.prevent="invoicePreview({{ $recent }})" class="fas fa-file-invoice cursor-pointer text-blue-700 text-lg"></i>
+                        <div class="flex space-x-2">
+
+                            <i wire:click.prevent="invoicePreview({{ $recent }})" class="fas fa-file-invoice cursor-pointer text-blue-700 text-lg"></i>
+
+                            <i wire:click.prevent="invoiceAction({{ $recent }})" class="fas fa-hand-holding-box cursor-pointer text-red-700 text-lg"></i>
+
+
+                        </div>
 
                     </x-table.cell>
 
@@ -420,6 +429,137 @@
 
         </div>
 
+
+    </x-modal>
+
+    <x-modal alpName="invoiceAct" class=" flex bg-gray-800">
+
+        <div class="w-11/12">
+
+            <x-form wire:submit.prevent="packageUpdate" grid="2">
+
+                <x-slot name="title">
+                </x-slot>
+
+                <x-input.label colspan="col-span-full">
+
+                    <x-slot name="label">
+
+                        <i class="fas fa-user-circle"></i> Member #
+
+                    </x-slot>
+
+                    <x-input.text class="py-2" name="memberNum" value="{{ $memberInfo }}"
+                                  readonly />
+
+                </x-input.label>
+
+                <x-input.label for="packageEdit.tracking_no">
+
+                    <x-slot name="label">
+
+                        <i class="fas fa-signal-stream"></i> Tracking #
+
+                    </x-slot>
+
+                    <x-input.text class="py-2" readonly wire:model="packageEdit.tracking_no"
+                                  :error="$errors->first('packageEdit.tracking_no')"/>
+
+                </x-input.label>
+
+                <x-input.label for="packageEdit.internal_tracking">
+
+                    <x-slot name="label">
+
+                        <i class="fas fa-signal-stream"></i> Internal Tracking #
+
+                    </x-slot>
+
+                    <x-input.text class="py-2" readonly wire:model="packageEdit.internal_tracking"
+                                  :error="$errors->first('packageEdit.internal_tracking')"/>
+
+                </x-input.label>
+
+                <x-input.label for="packageEdit.packagetype_id">
+
+                    <x-slot name="label">
+
+                        <i class="fab fa-pied-piper-square"></i> Description
+
+                    </x-slot>
+
+                    <x-input.select class="py-2" wire:model.debounce.300ms="packageEdit.packagetype_id"
+                                    :option="$description" field="type"
+                                    :error="$errors->first('packageEdit.packagetype_id')"/>
+
+                </x-input.label>
+
+                <x-input.label for="packageEdit.shipper_id">
+
+                    <x-slot name="label">
+
+                        <i class="fab fa-shopware"></i> Merchant
+
+                    </x-slot>
+
+                    <x-input.select class="py-2" wire:model.debounce.300ms="packageEdit.shipper_id"
+                                    :option="$merchants" field="name"
+                                    :error="$errors->first('packageEdit.shipper_id')"/>
+
+                </x-input.label>
+
+                <x-input.label for="packageEdit.arrival_date">
+
+                    <x-slot name="label">
+
+                        <i class="far fa-calendar-alt"></i> Arrival Date
+
+                    </x-slot>
+
+                    
+
+                </x-input.label>
+
+                <x-input.label for="packageEdit.weight">
+
+                    <x-slot name="label">
+
+                        <i class="fas fa-balance-scale-right"></i> Weight
+
+                    </x-slot>
+
+                    <x-input.text wire:change.debounce="packageFee" type="number" step="00.01" class="py-2" value="0"
+                                  aria-valuemin="0" wire:model.debounce.300ms="packageEdit.weight"
+                                  :error="$errors->first('packageEdit.weight')"/>
+
+                </x-input.label>
+
+                <x-input.label for="packageEdit.actually_cost">
+
+                    <x-slot name="label">
+
+                        <i class="far fa-money-check-edit-alt"></i> Actually Cost ($JMD)
+
+                    </x-slot>
+
+                    <x-input.text class="py-2" readonly value="{{ number_format($packageEdit->actually_cost,'2') }}"
+                                  :error="$errors->first('packageEdit.actually_cost')"/>
+
+                </x-input.label>
+
+                <x-input.submit class="bg-blue-500">
+
+                <i wire:loading.delay wire:loading.class="animate-spin" class="fad fa-spinner-third transform transition duration-300 "></i>
+
+                    Update Package
+
+                </x-input.submit>
+
+
+            </x-form>
+
+
+        </div>
 
     </x-modal>
 

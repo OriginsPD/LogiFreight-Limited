@@ -32,7 +32,7 @@
                 </x-slot>
 
                 <x-input.text class="py-2" wire:model="member.member_num"
-                              readonly :error="$errors->first('member.member_num')" />
+                              readonly :error="$errors->first('member.member_num')"/>
 
             </x-input.label>
 
@@ -63,7 +63,7 @@
 
                     @empty
 
-                        <option selected> No Members Found </option>
+                        <option selected> No Members Found</option>
 
                     @endforelse
 
@@ -214,7 +214,7 @@
                 </x-slot>
 
                 <x-input.text class="py-2" wire:model="member.member_num"
-                              readonly :error="$errors->first('member.member_num')" />
+                              readonly :error="$errors->first('member.member_num')"/>
 
             </x-input.label>
 
@@ -286,7 +286,7 @@
 
             </x-input.label>
 
-                <x-input.label for="package.arrival_date">
+            <x-input.label for="package.arrival_date">
 
                 <x-slot name="label">
 
