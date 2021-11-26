@@ -2,47 +2,10 @@
 
 namespace App\Models;
 
-use Database\Factories\PackageFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-/**
- * App\Models\Package
- *
- * @property int $id
- * @property int $packagetype_id
- * @property int $member_id
- * @property mixed $weight lb
- * @property int $shipper_id
- * @property string $status
- * @property mixed|null $estimated_cost
- * @property int|null $internal_tracking
- * @property int $expected_date
- * @property int $arrival_date
- * @property int $created_at
- * @property-read Member $member
- * @property-read Packagetype $packagetype
- * @property-read Shipper $shipper
- * @method static PackageFactory factory(...$parameters)
- * @method static Builder|Package newModelQuery()
- * @method static Builder|Package newQuery()
- * @method static Builder|Package query()
- * @method static Builder|Package whereArrivalDate($value)
- * @method static Builder|Package whereCreatedAt($value)
- * @method static Builder|Package whereEstimatedCost($value)
- * @method static Builder|Package whereExpectedDate($value)
- * @method static Builder|Package whereId($value)
- * @method static Builder|Package whereInternalTracking($value)
- * @method static Builder|Package whereMemberId($value)
- * @method static Builder|Package wherePackagetypeId($value)
- * @method static Builder|Package whereShipperId($value)
- * @method static Builder|Package whereStatus($value)
- * @method static Builder|Package whereWeight($value)
- * @mixin Eloquent
- */
 class Package extends Model
 {
     use HasFactory;
@@ -67,8 +30,8 @@ class Package extends Model
         'status',
         'tracking_no',
         'estimated_cost',
-        'invoice',
         'actually_cost',
+        'invoice',
         'internal_tracking',
         'expected_date',
         'arrival_date',
@@ -84,7 +47,7 @@ class Package extends Model
         'packagetype_id' => 'integer',
         'member_id' => 'integer',
         'shipper_id' => 'integer',
-        'created_at' => 'timestamp',
+        'created_at' => 'datetime',
     ];
 
 
@@ -95,7 +58,7 @@ class Package extends Model
 
     public function member()
     {
-        return $this->belongsTo(Member::class);
+        return $this->belongsTo(Member::class)->with('user');
     }
 
     public function shipper()

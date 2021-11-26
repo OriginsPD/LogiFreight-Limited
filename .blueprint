@@ -6,13 +6,13 @@ created:
     - database/factories/PackageCheckpointFactory.php
     - database/factories/CustomsFactory.php
     - database/factories/BillingFactory.php
-    - database/migrations/2021_11_23_200040_create_members_table.php
-    - database/migrations/2021_11_23_200041_create_shippers_table.php
-    - database/migrations/2021_11_23_200042_create_package_types_table.php
-    - database/migrations/2021_11_23_200043_create_packages_table.php
-    - database/migrations/2021_11_23_200044_create_package_checkpoints_table.php
-    - database/migrations/2021_11_23_200045_create_customs_table.php
-    - database/migrations/2021_11_23_200046_create_billings_table.php
+    - database/migrations/2021_11_25_143258_create_members_table.php
+    - database/migrations/2021_11_25_143259_create_shippers_table.php
+    - database/migrations/2021_11_25_143300_create_package_types_table.php
+    - database/migrations/2021_11_25_143301_create_packages_table.php
+    - database/migrations/2021_11_25_143302_create_package_checkpoints_table.php
+    - database/migrations/2021_11_25_143303_create_customs_table.php
+    - database/migrations/2021_11_25_143304_create_billings_table.php
     - app/Models/Member.php
     - app/Models/Shipper.php
     - app/Models/PackageType.php
@@ -22,10 +22,10 @@ created:
     - app/Models/Billing.php
 models:
     User: { username: string, email: string, isadmin: 'string default:0', password: string }
-    Member: { user_id: 'id foreign', member_num: string, trn: integer, address: 'text:400', mailaddress: 'string nullable', relationships: { hasMany: package }, timestamps: false }
+    Member: { user_id: 'id foreign', member_num: integer, trn: 'integer nullable', address: 'text:400 nullable', mailaddress: 'string nullable', relationships: { hasMany: package }, timestamps: false }
     Shipper: { name: string, address: text, relationships: { hasMany: package }, timestamps: false }
     PackageType: { type: string, relationships: { hasMany: package }, timestamps: false }
-    Package: { packagetype_id: 'id foreign', member_id: 'id foreign', weight: 'decimal:8,2 comment:lb', shipper_id: 'id foreign', status: string, tracking_no: integer, estimated_cost: 'decimal:8,2', actually_cost: 'decimal:8,2 nullable', internal_tracking: 'integer nullable', expected_date: timestamp, arrival_date: 'timestamp nullable', created_at: timestamp, timestamps: false }
+    Package: { packagetype_id: 'id foreign', member_id: 'id foreign', weight: 'decimal:8,2 comment:lb', shipper_id: 'id foreign', status: string, tracking_no: integer, estimated_cost: 'decimal:8,2 nullable', actually_cost: 'decimal:8,2 nullable', invoice: 'string nullable', internal_tracking: 'integer nullable', expected_date: 'date nullable', arrival_date: 'date nullable', created_at: datetime, timestamps: false }
     PackageCheckpoint: { package_id: 'id foreign', date: 'date useCurrent' }
     Customs: { package_id: 'id foreign', timestamps: false }
     Billing: { package_id: 'id foreign', basic_rate: 'decimal:8,2', handler_fee: 'decimal:8,2 nullable', custom_duties: 'decimal:8,2 nullable', final_total: 'decimal:8,2 nullable', timestamps: false }

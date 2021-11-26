@@ -2,8 +2,12 @@
 
 namespace App\Http\Livewire\Admin\Update;
 
+use App\Action\Mail\PackageArrived;
+use App\Action\Mail\PackageStatus;
+use App\Models\Customs;
 use App\Models\Member;
 use App\Models\Package;
+use App\Models\PackageCheckpoint;
 use App\Models\PackageType;
 use App\Models\Shipper;
 use Livewire\Component;
@@ -11,6 +15,8 @@ use Livewire\Component;
 class UpdatePackage extends Component
 {
     public Package $package;
+    public PackageCheckpoint $packageCheck;
+    public Customs $customs;
 
     public $memberInfo;
 
@@ -24,14 +30,23 @@ class UpdatePackage extends Component
         'package.actually_cost' => 'required|min:500.00|numeric'
     ];
 
-    public function alterPackage()
+    public function alterPackage(PackageStatus $status): void
     {
         $this->validate();
 
-        $this->package->setAttribute('status', 'warehouse');
+        $this->package->setAttribute('status', 'On-Their-Way-To-Jamaica');
         $this->package->update();
 
         sleep(1);
+
+        $status->execute($this->package->getAttributeValue('id'));
+
+        $this->customs->setAttribute('package_id',$this->package->getAttributeValue('id'));
+        $this->customs->save();
+
+        $this->packageCheck->setAttribute('package_id',$this->package->getAttributeValue('id'));
+        $this->packageCheck->setAttribute('date',now());
+        $this->packageCheck->save();
 
         $this->dispatchBrowserEvent('close-modal');
         $this->dispatchBrowserEvent('show-alert');
@@ -40,15 +55,23 @@ class UpdatePackage extends Component
 //        $this->package = new Package;
     }
 
-    public function packageFee()
+    public function packageFee(): void
     {
-        if ($this->package->weight > 3.5) {
+        if ($this->package->weight >= 3.5 && $this->package->weight < 8.5) {
 
-            $this->package->actually_cost = $this->package->estimated_cost + (1500 * $this->package->weight);
+            $this->package->actually_cost = $this->package->estimated_cost + (($this->package->estimated_cost / 0.15) * $this->package->weight);
+
+        } elseif ($this->package->weight >= 8.5 && $this->package->weight < 12.5){
+
+            $this->package->actually_cost = $this->package->estimated_cost + (( ($this->package->estimated_cost / 0.15) + 600 ) * $this->package->weight);
+
+        } elseif ($this->package->weight > 12.5){
+
+            $this->package->actually_cost = $this->package->estimated_cost + (( ($this->package->estimated_cost / 0.15) + 600 + 600 ) * $this->package->weight);
 
         } else {
 
-            $this->package->actually_cost = 1500 + $this->package->estimated_cost;
+            $this->package->actually_cost = ($this->package->estimated_cost / 15) + $this->package->estimated_cost;
         }
     }
 
@@ -59,6 +82,9 @@ class UpdatePackage extends Component
 
     public function mount(Package $package)
     {
+        $this->customs = new Customs;
+
+        $this->packageCheck = new PackageCheckpoint;
 
         $this->package = $package;
 

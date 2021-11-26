@@ -5,25 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * App\Models\Shipper
- *
- * @property int $id
- * @property string $name
- * @property string $address
- * @property int $tracking_no
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Package[] $packages
- * @property-read int|null $packages_count
- * @method static \Database\Factories\ShipperFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipper newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Shipper newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Shipper query()
- * @method static \Illuminate\Database\Eloquent\Builder|Shipper whereAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipper whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipper whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipper whereTrackingNo($value)
- * @mixin \Eloquent
- */
 class Shipper extends Model
 {
     use HasFactory;

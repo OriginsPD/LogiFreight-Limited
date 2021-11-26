@@ -111,7 +111,11 @@
 
         <x-input.submit wire:click.prevent="alterPackage" class="bg-blue-500">
 
-            <i wire:loading.delay wire:loading.class="animate-spin" class="fad fa-spinner-third transform transition duration-300 "></i>
+           <span wire:loading.delay.longer wire:loading.class="animate-spin">
+
+                    <i class="far fa-spinner transform duration-300 text-white "></i>
+
+                </span>
 
             Update Package
 

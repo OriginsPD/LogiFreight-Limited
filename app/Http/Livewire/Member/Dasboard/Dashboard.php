@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Member\Dasboard;
 
+use App\Models\Member;
 use App\Models\Package;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -56,10 +57,12 @@ class Dashboard extends Component
     public function render()
     {
 
+        $id = Member::where('user_id',auth()->id())->value('id');
+
         return view('livewire.member.dasboard.dashboard', [
             'recents' => Package::with('member', 'shipper', 'packagetype')
 
-                ->where('member_id', auth()->id())
+                ->where('member_id', $id)
 
                 ->where('created_at', 'like', "%" . '2021' . "%")
 
@@ -80,7 +83,7 @@ class Dashboard extends Component
                 ->paginate($this->pagintor),
 
             'allpackages' => Package::with('member', 'shipper', 'packagetype')
-                ->where('member_id', auth()->id())
+                ->where('member_id', $id)
                 ->where('status', 'like', '%' . $this->status . '%')
                 ->orderBy($this->column, $this->order)
                 ->paginate($this->pagintor),

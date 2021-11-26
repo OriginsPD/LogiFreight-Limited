@@ -19,8 +19,8 @@ class CreateMembersTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->string('member_num');
-            $table->integer('trn');
-            $table->text('address', 400);
+            $table->integer('trn')->nullable();
+            $table->text('address', 400)->nullable();
             $table->string('mailaddress')->nullable();
         });
 

@@ -69,6 +69,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function member(){
+        return $this->hasOne(Member::class);
+    }
+
     public function setPasswordAttribute($value): string
     {
         return $this->attributes['password'] = bcrypt($value);

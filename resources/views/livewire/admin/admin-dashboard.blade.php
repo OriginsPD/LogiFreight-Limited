@@ -1,12 +1,13 @@
 <div x-data="{ isSeeMore: true, isPackage: false,
                isAll: false, isRecent: true,
                invoicePre: @entangle('invoicePre'),
-                invoiceAct: @entangle('invoiceAct')}"
+                invoiceAct: @entangle('invoiceAct'),
+                invoiceGen: @entangle('invoiceGen')}"
      x-on:hide-see-more.window="isSeeMore = false"
      x-on:close-modal.window="invoiceAct = false"
-     @click.prevent="isSlide = false" >
+     @click.prevent="isSlide = false">
 
-    <x-alerts :message="session('success')" />
+    <x-alerts :message="session('success')"/>
 
     <div class="text-white py-4 bg-gradient-to-bl from-blue-500 via-pink-600 to-pink-700">
 
@@ -22,7 +23,7 @@
 
                         <div class="h-20 bg-red-500 flex items-center justify-between">
 
-                            <p class="mr-0 text-white text-xl font-bold pl-5"> <i class="fad fa-box-check text-3xl pr-2">
+                            <p class="mr-0 text-white text-xl font-bold pl-5"><i class="fad fa-box-check text-3xl pr-2">
 
                                 </i> Ready For Pickup </p>
 
@@ -75,7 +76,8 @@
                 <!---== Third Stats Container ====--->
                 <div class="container mx-auto pr-4">
 
-                    <div class="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-105 cursor-pointer">
+                    <div
+                        class="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-105 cursor-pointer">
 
                         <div class="h-20 bg-yellow-400 flex items-center justify-between">
 
@@ -163,13 +165,12 @@
 
             <i class="fal fa-table absolute z-20 text-white text-2xl"></i>
 
-            <div class="text-white mt-12 p-4"> Switch </div>
+            <div class="text-white mt-12 p-4"> Switch</div>
 
         </div>
 
 
     </div>
-
 
     <div x-show="isRecent"
          x-transition.duration.300ms
@@ -190,33 +191,46 @@
 
             <x-slot name="head">
 
-                <x-table.head> Tracking # </x-table.head>
+                <x-table.head></x-table.head>
 
-                <x-table.head> Username </x-table.head>
+                <x-table.head> Tracking #</x-table.head>
 
-                <x-table.head> Email </x-table.head>
+                <x-table.head> Username</x-table.head>
 
-                <x-table.head> Shipper </x-table.head>
+                <x-table.head> Email</x-table.head>
 
-                <x-table.head> Package Type </x-table.head>
+                <x-table.head> Shipper</x-table.head>
 
-                <x-table.head> Weight (lb) </x-table.head>
+                <x-table.head> Package Type</x-table.head>
 
-                <x-table.head> Status </x-table.head>
+                <x-table.head> Weight (lb)</x-table.head>
 
-                <x-table.head> Estimated Cost </x-table.head>
+                <x-table.head> Status</x-table.head>
 
-                <x-table.head> Actually Cost </x-table.head>
+                <x-table.head> Estimated Cost</x-table.head>
 
-                <x-table.head> Internal Tracking # </x-table.head>
+                <x-table.head> Actually Cost</x-table.head>
 
-                <x-table.head> Invoice </x-table.head>
+                <x-table.head> Internal Tracking #</x-table.head>
+
+                <x-table.head> Invoice</x-table.head>
 
             </x-slot>
 
             @forelse($recents as $recent)
 
                 <x-table.row>
+
+                    <x-table.cell>
+
+                        @if($recent->status == 'Ready-For-Pick-Up')
+
+                            <input type="checkbox" wire:click.prevent="invoiceGen({{ $recent }})"
+                                   class="form-checkbox border border-gray-400"/>
+
+                        @endif
+
+                    </x-table.cell>
 
                     <x-table.cell> {{ $recent->tracking_no }} </x-table.cell>
 
@@ -230,7 +244,7 @@
 
                     <x-table.cell> {{ $recent->weight }} </x-table.cell>
 
-                    <x-table.cell> {{ $recent->status }} </x-table.cell>
+                    <x-table.cell class="capitalize"> {{ $recent->status }} </x-table.cell>
 
                     <x-table.cell> $ {{ number_format($recent->estimated_cost,'2') }} </x-table.cell>
 
@@ -242,10 +256,17 @@
 
                         <div class="flex space-x-2">
 
-                            <i wire:click.prevent="invoicePreview({{ $recent }})" class="fas fa-file-invoice cursor-pointer text-blue-700 text-lg"></i>
+                            <i wire:click.prevent="invoicePreview({{ $recent }})"
+                               class="fas fa-file-invoice cursor-pointer text-blue-700 text-lg"></i>
 
-                            <i wire:click.prevent="invoiceAction({{ $recent }})" class="fas fa-hand-holding-box cursor-pointer text-red-700 text-lg"></i>
+                            <i wire:click.prevent="invoiceAction({{ $recent }})"
+                               class="fas fa-hand-holding-box cursor-pointer text-red-700 text-lg"></i>
 
+                            <i wire:click.prevent="invoiceReady({{ $recent }})"
+                               class="fas fa-cubes cursor-pointer text-yellow-400 text-lg"></i>
+
+                            <i wire:click.prevent="invoiceDelivery({{ $recent }})"
+                               class="fas fa-people-carry cursor-pointer text-green-600 text-lg"></i>
 
                         </div>
 
@@ -257,7 +278,7 @@
 
                 <x-table.row>
 
-                    <x-table.cell colspan="10" class="text-center"> No Recent Order Made </x-table.cell>
+                    <x-table.cell colspan="10" class="text-center"> No Recent Order Made</x-table.cell>
 
                 </x-table.row>
 
@@ -265,7 +286,8 @@
 
             <x-table.row x-show="isSeeMore">
 
-                <x-table.cell wire:click.prevent="seeMore" colspan="10" class="text-center cursor-pointer text-blue-600">
+                <x-table.cell wire:click.prevent="seeMore" colspan="10"
+                              class="text-center cursor-pointer text-blue-600">
 
                     See More
 
@@ -290,15 +312,15 @@
 
                     <x-input.select wire:model.lazy="status" field="Filter By">
 
-                        <option value="" > All </option>
+                        <option value=""> All</option>
 
-                        <option value="In-Transit" > In-Transit </option>
+                        <option value="In-Transit"> In-Transit</option>
 
-                        <option value="On-Their-Way-To-Jamaica" > On-Their-Way-To-Jamaica </option>
+                        <option value="On-Their-Way-To-Jamaica"> On-Their-Way-To-Jamaica</option>
 
-                        <option value="delivered" > Delivered </option>
+                        <option value="delivered"> Delivered</option>
 
-                        <option value="warehouse" > Warehouse </option>
+                        <option value="warehouse"> Warehouse</option>
 
                     </x-input.select>
 
@@ -363,7 +385,7 @@
 
                 </x-table.head>
 
-                <x-table.head class="cursor-pointer" >
+                <x-table.head class="cursor-pointer">
 
                     Invoice
 
@@ -395,7 +417,8 @@
 
                     <x-table.cell class="text-center">
 
-                        <i wire:click.prevent="invoicePreview({{ $allpackage }})" class="fas fa-file-invoice cursor-pointer text-blue-700 text-lg"></i>
+                        <i wire:click.prevent="invoicePreview({{ $allpackage }})"
+                           class="fas fa-file-invoice cursor-pointer text-blue-700 text-lg"></i>
 
                     </x-table.cell>
 
@@ -405,7 +428,7 @@
 
                 <x-table.row>
 
-                    <x-table.cell colspan="8    " class="text-center"> No Recent Order Made </x-table.cell>
+                    <x-table.cell colspan="8    " class="text-center"> No Recent Order Made</x-table.cell>
 
                 </x-table.row>
 
@@ -413,7 +436,8 @@
 
             <x-table.row x-show="isSeeMore">
 
-                <x-table.cell wire:click.prevent="seeMore" colspan="8   " class="text-center cursor-pointer text-blue-600">
+                <x-table.cell wire:click.prevent="seeMore" colspan="8   "
+                              class="text-center cursor-pointer text-blue-600">
 
                     See More
 
@@ -439,7 +463,13 @@
 
     <x-modal alpName="invoiceAct" class="flex bg-gray-800">
 
-        <livewire:admin.update.update-package :package="$this->package" :wire:key="$this->package->id" />
+        <livewire:admin.update.update-package :package="$this->package" :wire:key="$this->package->id"/>
+
+    </x-modal>
+
+    <x-modal alpName="invoiceGen" class="p-4 overflow-y-scroll">
+
+        <livewire:admin.create.create-invoice :package="$this->package" :wire:key="$this->package->id" />
 
     </x-modal>
 

@@ -23,14 +23,14 @@ class MemberFactory extends Factory
      */
     public function definition()
     {
-        $memberNum = Str::random(2).random_int(10000,99999);
+        $memberNum = Str::random(6);
 
         return [
             'user_id' => User::factory(),
             'member_num' => $memberNum,
-            'trn' => $this->faker->numberBetween(100000000, 999999999),
+            'trn' => $this->faker->numberBetween(10000000, 999999999),
             'address' => $this->faker->address,
-            'mailaddress' => $memberNum." Tillman Plains Quentinland, FL 44091",
+            'mailaddress' => $memberNum.' Krajcik Run Lucienneburgh, MT 89914',
         ];
     }
 }

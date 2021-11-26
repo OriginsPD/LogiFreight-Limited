@@ -1,7 +1,7 @@
 models:
   Member:
     user_id: id foreign
-    member_num: integer
+    member_num: String:6
     trn: integer nullable
     address: text:400 nullable
     mailaddress: string nullable
@@ -28,11 +28,11 @@ models:
     weight: decimal:8,2 comment:lb
     shipper_id: id foreign
     status: string
-    tracking_no: integer
+    tracking_no: string
     estimated_cost: decimal:8,2 nullable
     actually_cost: decimal:8,2 nullable
     invoice: string nullable
-    internal_tracking: integer nullable
+    internal_tracking: string nullable
     expected_date: date nullable
     arrival_date: date nullable
     created_at: datetime

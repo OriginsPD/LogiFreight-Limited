@@ -15,7 +15,7 @@ $theme = ($status) ? 'red' : 'green'
      x-on:show-alert.window="Alert = true; setTimeout(() => { Alert = false },3000)"
 
      :class="Alert ? '-translate-x-0' : 'translate-x-full'"
-    class="w-auto fixed z-20 top-20 transform transition duration-300 right-0 rounded-l-2xl text-white h-16 bg-white  shadow-2xl">
+    class="w-auto fixed z-40 top-20 transform transition duration-300 right-0 rounded-l-2xl text-white h-16 bg-white  shadow-2xl">
 
     <div
          x-transition.duration.300ms.origin.right

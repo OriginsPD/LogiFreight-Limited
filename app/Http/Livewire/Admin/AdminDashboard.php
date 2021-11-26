@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Action\Mail\PackageArrived;
+use App\Action\Mail\PackageStatus;
+use App\Models\Customs;
 use App\Models\Package;
-use App\Models\PackageType;
-use App\Models\Shipper;
+use App\Models\PackageCheckpoint;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,16 +16,20 @@ class AdminDashboard extends Component
 
     public Package $package;
     public Package $packageEdit;
+    public PackageCheckpoint $packageCheck;
+    public Customs $customs;
 
     public $column = 'tracking_no';
     public $order = 'desc';
     public $status = '';
     public $pagintor = 10;
 
+
     public $search = '';
 
     public $invoicePre = false;
     public $invoiceAct = false;
+    public $invoiceGen = false;
 
     public $url;
 
@@ -53,13 +59,92 @@ class AdminDashboard extends Component
         $this->invoicePre = true;
     }
 
-    public function invoiceAction(Package $selected)
+    public function invoiceAction(Package $selected): void
     {
         $this->package = $selected;
 
-        $this->invoiceAct = true;
+        if ($this->package->status === 'Ready-For-Pick-Up' || $this->package->status === 'delivered') {
+
+            $this->dispatchBrowserEvent('show-alert');
+            session()->put('success', 'Package Already Process');
+
+        } else {
+
+            $this->invoiceAct = true;
+        }
+
+
     }
 
+    public function invoiceReady(Package $selected, PackageStatus $status): void
+    {
+        $this->package = $selected;
+
+        if ($this->package->status === 'On-Their-Way-To-Jamaica') {
+
+            $this->package->setAttribute('status', 'warehouse');
+
+            $this->package->update();
+
+            $status->execute($this->package->id);
+
+            $this->packageCheckPoint($selected);
+
+            $this->dispatchBrowserEvent('show-alert');
+            session()->put('success', 'Package Updated Successful');
+
+        } else {
+
+            $this->dispatchBrowserEvent('show-alert');
+            session()->put('success', "Package Has Been Process");
+        }
+
+        $this->emit('refresh');
+    }
+
+    public function invoiceDelivery(Package $selected, PackageArrived $arrived): void
+    {
+        $this->package = $selected;
+
+
+        if ($this->package->status === 'warehouse') {
+
+            $this->package->setAttribute('status', 'Ready-For-Pick-Up');
+
+            $this->package->update();
+
+            $arrived->execute($this->package->id);
+
+            $this->packageCheckPoint($selected);
+
+            $this->dispatchBrowserEvent('show-alert');
+            session()->put('success', 'Package Updated Successful');
+
+        } else {
+
+            $this->dispatchBrowserEvent('show-alert');
+            session()->put('success', "Package Has Been Process");
+        }
+
+        $this->emit('refresh');
+    }
+
+    public function invoiceGen(Package $selected): void
+    {
+        $this->package = $selected;
+        $this->invoiceGen = true;
+    }
+
+    public function packageCheckPoint(Package $package)
+    {
+        $this->package = $package;
+//        $this->customs->setAttribute('package_id',$this->package->getAttributeValue('id'));
+//        $this->customs->save();
+
+        $this->packageCheck->setAttribute('package_id', $this->package->getAttributeValue('id'));
+        $this->packageCheck->setAttribute('date', now());
+        $this->packageCheck->save();
+    }
 
     public function updatingSearch(): void
     {
@@ -70,6 +155,10 @@ class AdminDashboard extends Component
     {
         $this->package = new Package;
         $this->packageEdit = new Package;
+
+        $this->customs = new Customs;
+
+        $this->packageCheck = new PackageCheckpoint;
     }
 
     public function render()
@@ -97,12 +186,15 @@ class AdminDashboard extends Component
                 ->count(),
 
             'readyCount' => Package::where('status', 'warehouse')
+                ->where('created_at', 'like', "%" . '2021' . "%")
                 ->count(),
 
             'deliveryCount' => Package::where('status', 'delivered')
+                ->where('created_at', 'like', "%" . '2021' . "%")
                 ->count(),
 
-            'transitCount' => Package::where('status', 'In-Transit')
+            'transitCount' => Package::where('status', 'On-Their-Way-To-Jamaica')
+                ->where('created_at', 'like', "%" . '2021' . "%")
                 ->count(),
 
         ])

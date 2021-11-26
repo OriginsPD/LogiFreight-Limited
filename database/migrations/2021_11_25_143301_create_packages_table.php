@@ -20,16 +20,16 @@ class CreatePackagesTable extends Migration
             $table->foreignId('packagetype_id')->constrained('package_types');
             $table->foreignId('member_id')->constrained('members');
             $table->decimal('weight', 8, 2)->comment('lb');
-            $table->foreignId('shipper_id')->constrained();
+            $table->foreignId('shipper_id')->constrained('shippers');
             $table->string('status');
-            $table->integer('tracking_no');
-            $table->decimal('estimated_cost', 8, 2);
-            $table->string('invoice')->nullable();
+            $table->string('tracking_no');
+            $table->decimal('estimated_cost', 8, 2)->nullable();
             $table->decimal('actually_cost', 8, 2)->nullable();
-            $table->integer('internal_tracking')->nullable();
-            $table->date('expected_date');
+            $table->string('invoice')->nullable();
+            $table->string('internal_tracking')->nullable();
+            $table->date('expected_date')->nullable();
             $table->date('arrival_date')->nullable();
-            $table->date('created_at');
+            $table->dateTime('created_at');
         });
 
         Schema::enableForeignKeyConstraints();

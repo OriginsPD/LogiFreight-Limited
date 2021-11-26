@@ -47,7 +47,7 @@ class PreAlert extends Component
                 'user.email' => 'required|email',
             ]);
 
-            $this->createMember();
+            $id = $this->createMember();
 
             session()->put('success', 'Member Created Successful');
 
@@ -65,6 +65,8 @@ class PreAlert extends Component
             ]);
 
             $this->createPackage($this->member->id);
+
+            $id = $this->member->id;
 
             session()->put('success', 'Package Created Successful');
 
@@ -93,6 +95,8 @@ class PreAlert extends Component
 
         }
 
+//        $arrived->execute($id);
+
         sleep(1);
 
         $this->dispatchBrowserEvent('close-modal');
@@ -103,7 +107,7 @@ class PreAlert extends Component
 
     }
 
-    public function createMember(): void
+    public function createMember(): mixed
     {
 
         $this->user->setAttribute('password', 'password123');
@@ -114,6 +118,7 @@ class PreAlert extends Component
         $this->member->setAttribute('mailaddress', $this->member->member_num . ' Tillman Plains Quentinland, FL 44091');
         $this->member->save();
 
+        return $this->member->getAttributeValue('id');
     }
 
     public function createPackage($id): void
@@ -124,7 +129,7 @@ class PreAlert extends Component
         }
 
         $this->package->setAttribute('member_id', $id);
-        $this->package->setAttribute('status', 'warehouse');
+        $this->package->setAttribute('status', 'On-Their-Way-To-Jamaica');
         $this->package->setAttribute('created_at', now());
         $this->package->save();
     }

@@ -6,7 +6,6 @@ use App\Models\Member;
 use App\Models\Package;
 use App\Models\PackageType;
 use App\Models\Shipper;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -32,8 +31,10 @@ class PreAlert extends Component
 
         $invoiceName = $this->upload->store('/','invoicePhoto');
 
-        $this->package->setAttribute('member_id',auth()->id());
-        $this->package->setAttribute('status','In-Transit');
+        $id = Member::where('user_id',auth()->id())->value('id');
+
+        $this->package->setAttribute('member_id',$id);
+        $this->package->setAttribute('status','Pending');
         $this->package->setAttribute('invoice',$invoiceName);
         $this->package->setAttribute('created_at',now());
         $this->package->save();
