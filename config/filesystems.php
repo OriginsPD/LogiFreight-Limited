@@ -49,6 +49,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'invoiceBill' => [
+            'driver' => 'local',
+            'root' => storage_path('app/invoiceBill'),
+            'url' => env('APP_URL').'/invoiceBill',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -75,6 +82,7 @@ return [
 
     'links' => [
         public_path('invoicePhoto') => storage_path('app/invoicePhoto'),
+        public_path('invoiceBill') => storage_path('app/invoiceBill'),
     ],
 
 ];

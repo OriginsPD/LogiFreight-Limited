@@ -20,13 +20,10 @@ class PackageArrival extends Mailable
     public function __construct($details)
     {
 
-        $this->details = [
-            'username' => $details->member->user->username,
-            'TrackIn' => $details->tracking_no,
-            'InterTrack' => $details->internal_tracking
-        ];
+        $this->details = $details;
 
     }
+
 
     /**
      * Build the message.
@@ -35,6 +32,9 @@ class PackageArrival extends Mailable
      */
     public function build()
     {
-        return $this->markdown('Mail.PackageArrival')->subject('LogiFreight Limited Package Arrival');
+        return $this->markdown('Mail.PackageArrival')
+            ->subject('LogiFreight Limited Package Arrival');
+//            ->with('details',$this->details)
+//            ->attach(asset('invoiceBill/'.$this->details['TrackIn']),['mime' => 'application/pdf']);
     }
 }

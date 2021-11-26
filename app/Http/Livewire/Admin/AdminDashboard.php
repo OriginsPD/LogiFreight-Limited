@@ -57,6 +57,7 @@ class AdminDashboard extends Component
         $this->url = $selected->invoiceUrl();
 
         $this->invoicePre = true;
+
     }
 
     public function invoiceAction(Package $selected): void
@@ -73,6 +74,7 @@ class AdminDashboard extends Component
             $this->invoiceAct = true;
         }
 
+        $this->emit('refresh');
 
     }
 
@@ -131,7 +133,7 @@ class AdminDashboard extends Component
 
     public function invoiceGen(Package $selected): void
     {
-        $this->package = $selected;
+        $this->packageEdit = $selected;
         $this->invoiceGen = true;
     }
 
@@ -144,6 +146,7 @@ class AdminDashboard extends Component
         $this->packageCheck->setAttribute('package_id', $this->package->getAttributeValue('id'));
         $this->packageCheck->setAttribute('date', now());
         $this->packageCheck->save();
+
     }
 
     public function updatingSearch(): void

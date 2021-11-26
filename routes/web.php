@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PdfController;
 use App\Http\Livewire\Admin\AdminDashboard;
 use App\Http\Livewire\Home\Index;
 use App\Http\Livewire\Member\Dasboard\Dashboard;
@@ -22,12 +23,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Index::class)->name('index');
 
-Route::group(['middleware' => 'auth'],function (){
+Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/admin', AdminDashboard::class)
         ->name('Admin.dashboard');
 
     Route::get('/member', Dashboard::class)
         ->name('member.dashboard');
+
+    Route::get('/downloadPDF/{data}', [PdfController::class, 'downloadPdf'])->name('pdf.download');
 
 });

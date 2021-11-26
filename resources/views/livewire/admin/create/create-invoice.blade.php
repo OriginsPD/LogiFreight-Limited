@@ -121,13 +121,13 @@
                     <tr>
                         <th colspan="3"></th>
                         <td class="text-sm font-bold"><b>Handling Fee:</b></td>
-                        <td class="text-sm font-bold tracking-wider"><b> ={{ ($invoiceInfo->weight >= 8.5 ) ? '$600' : '$0.00'  }} </b></td>
+                        <td class="text-sm font-bold tracking-wider"><b> {{ ($invoiceInfo->weight >= 8.5 ) ? '$600' : '$0.00'  }} </b></td>
                     </tr>
                     <!--end tr-->
                     <tr class="text-white bg-gray-800">
                         <th colspan="3"></th>
                         <td class="text-sm font-bold"><b>Total</b></td>
-                        <td class="text-sm font-bold"><b> {{ $invoiceInfo->actually_cost }} </b></td>
+                        <td class="text-sm font-bold"><b> $ {{ number_format($invoiceInfo->actually_cost,2) }} </b></td>
                     </tr>
 
                     </tbody>
@@ -154,11 +154,17 @@
             <div class="flex items-center justify-center">
                 Thank you very much for doing business with us.
             </div>
+
             <div class="flex items-end justify-end space-x-3">
-                <button class="px-4 py-2 text-sm text-green-600 bg-green-100">Print</button>
-                <button class="px-4 py-2 text-sm text-blue-600 bg-blue-100">Save</button>
-                <button class="px-4 py-2 text-sm text-red-600 bg-red-100">Cancel</button>
+
+                <button wire:click.prevent="downloadPDF({{ $invoiceInfo }})" class="px-4 py-2 text-sm text-white bg-blue-500">
+
+                    Generate PDF
+
+                </button>
+
             </div>
+
         </div>
 
     </div>

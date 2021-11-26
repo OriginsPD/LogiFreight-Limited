@@ -6,6 +6,46 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * App\Models\Package
+ *
+ * @property int $id
+ * @property int $packagetype_id
+ * @property int $member_id
+ * @property string $weight lb
+ * @property int $shipper_id
+ * @property string $status
+ * @property string $tracking_no
+ * @property string|null $estimated_cost
+ * @property string|null $actually_cost
+ * @property string|null $invoice
+ * @property string|null $internal_tracking
+ * @property string|null $expected_date
+ * @property string|null $arrival_date
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property-read \App\Models\Member $member
+ * @property-read \App\Models\PackageType $packagetype
+ * @property-read \App\Models\Shipper $shipper
+ * @method static \Database\Factories\PackageFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Package newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Package query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereActuallyCost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereArrivalDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereEstimatedCost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereExpectedDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereInternalTracking($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereInvoice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereMemberId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package wherePackagetypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereShipperId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereTrackingNo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereWeight($value)
+ * @mixin \Eloquent
+ */
 class Package extends Model
 {
     use HasFactory;

@@ -6,14 +6,14 @@
 ## --------------------------------------------------------------
 
 ## Tracking Number# {{ $details['TrackIn'] }}
-## Internal Tracking Number# {{ $details['TrackIn'] }}
+## Internal Tracking Number# {{ $details['InterTrack'] }}
 
 ## --------------------------------------------------------------
 ## Monday - Friday 9:00 am - 8:00 pm
 ## Saturday 10:00 am - 5:00 pm
 
-@component('mail::button', ['url' => ''])
-View Invoice
+@component('mail::button', ['url' => route('pdf.download',$details['TrackIn'])])
+Download Invoice
 @endcomponent
 
 ## We would like to take the time to Thank You For using Our Services

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/scroll.css') }}">
     <link href="https://kit-pro.fontawesome.com/releases/v5.15.4/css/pro.min.css" rel="stylesheet">
     @livewireStyles
+
 </head>
 <body class="h-screen antialiased leading-none font-sans">
 

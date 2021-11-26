@@ -223,10 +223,13 @@
 
                     <x-table.cell>
 
-                        @if($recent->status == 'Ready-For-Pick-Up')
+                        @if($recent->status == 'Ready-For-Pick-Up' || $recent->status == 'warehouse')
 
-                            <input type="checkbox" wire:click.prevent="invoiceGen({{ $recent }})"
-                                   class="form-checkbox border border-gray-400"/>
+                            <button wire:click.prevent="invoiceGen({{ $recent }})">
+
+                                <i class="fas fa-file-pdf text-lg text-red-500 "></i>
+
+                            </button>
 
                         @endif
 
@@ -260,7 +263,7 @@
                                class="fas fa-file-invoice cursor-pointer text-blue-700 text-lg"></i>
 
                             <i wire:click.prevent="invoiceAction({{ $recent }})"
-                               class="fas fa-hand-holding-box cursor-pointer text-red-700 text-lg"></i>
+                               class="fas fa-hand-holding-box cursor-pointer text-orange-500 text-lg"></i>
 
                             <i wire:click.prevent="invoiceReady({{ $recent }})"
                                class="fas fa-cubes cursor-pointer text-yellow-400 text-lg"></i>
@@ -314,7 +317,7 @@
 
                         <option value=""> All</option>
 
-                        <option value="In-Transit"> In-Transit</option>
+                        <option value="Pending"> Pending</option>
 
                         <option value="On-Their-Way-To-Jamaica"> On-Their-Way-To-Jamaica</option>
 
@@ -463,14 +466,18 @@
 
     <x-modal alpName="invoiceAct" class="flex bg-gray-800">
 
-        <livewire:admin.update.update-package :package="$this->package" :wire:key="$this->package->id"/>
+        <livewire:admin.update.update-package :package="$this->package" wire:key="{{ Str::random(2).$this->package->id }}"/>
 
     </x-modal>
 
-    <x-modal alpName="invoiceGen" class="p-4 overflow-y-scroll">
+    <div>
 
-        <livewire:admin.create.create-invoice :package="$this->package" :wire:key="$this->package->id" />
+        <x-modal alpName="invoiceGen" class="p-8 bg-gray-800 bg-opacity-70 overflow-y-scroll">
 
-    </x-modal>
+            <livewire:admin.create.create-invoice :package="$this->packageEdit" :wire:key="$this->package->id" />
+
+        </x-modal>
+
+    </div>
 
 </div>
